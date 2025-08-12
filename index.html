@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentina Villamarín Gaona - Automatización Inteligente</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 20%, #f093fb 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 20s infinite linear;
+        }
+
+        .shape:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            width: 80px;
+            height: 80px;
+            background: #fff;
+            border-radius: 50%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            width: 100px;
+            height: 100px;
+            background: #ff6b6b;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation-delay: 7s;
+        }
+
+        .shape:nth-child(3) {
+            top: 40%;
+            left: 70%;
+            width: 60px;
+            height: 60px;
+            background: #4ecdc4;
+            transform: rotate(45deg);
+            animation-delay: 14s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-30px) rotate(90deg);
+            }
+            50% {
+                transform: translateY(-60px) rotate(180deg);
+            }
+            75% {
+                transform: translateY(-30px) rotate(270deg);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 50px;
+            text-align: center;
+            margin-bottom: 50px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .profile-info {
+            text-align: left;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+        }
+
+        .unique-value-prop {
+            font-size: 1.4em;
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .credentials {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .credential {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .bio-highlight {
+            font-size: 1.1em;
+            color: #2d3748;
+            max-width: 800px;
+            margin: 20px auto;
+            line-height: 1.7;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .social-links a:hover::before {
+            left: 100%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3em;
+            margin: 80px 0 50px 0;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin: 50px 0;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.2);
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.2);
+        }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .project-title {
+            font-size: 1.6em;
+            color: #2d3748;
+            font-weight: 700;
+        }
+
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .completed {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+        }
+
+        .in-progress {
+            background: linear-gradient(135deg, #ed8936, #dd6b20);
+            color: white;
+        }
+
+        .planned {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .project-description {
+            color: #4a5568;
+            margin-bottom: 25px;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+
+        .psychology-insight {
+            background: linear-gradient(135deg, #e6fffa, #b2f5ea);
+            border-left: 4px solid #319795;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-style: italic;
+            color: #2c7a7b;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .tech-tag {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #e6fffa, #b2f5ea);
+            color: #2c7a7b;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            border: 1px solid rgba(44, 122, 123, 0.2);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .project-links a {
+            padding: 12px 24px;
+            border: 2px solid #667eea;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transition: all 0.3s;
+            z-index: -1;
+        }
+
+        .project-links a:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .project-links a:hover::before {
+            left: 0;
+        }
+
+        .demo-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2) !important;
+            color: white !important;
+            border: none !important;
+        }
+
+        .demo-btn:hover {
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .impact-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+            padding: 25px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 15px;
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-number {
+            font-size: 2em;
+            font-weight: 800;
+            color: #667eea;
+        }
+
+        .metric-label {
+            font-size: 0.9em;
+            color: #4a5568;
+            font-weight: 600;
+        }
+
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 50px;
+            text-align: center;
+            margin-top: 80px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .cta-section {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .cta-description {
+            font-size: 1.2em;
+            color: #4a5568;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .contact-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.1em;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: all 0.3s;
+        }
+
+        .contact-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .contact-button:hover::before {
+            left: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2.5em;
+            }
+            
+            .profile-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-info {
+                text-align: center;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-card {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="profile-section">
+                <div class="profile-avatar">VV</div>
+                <div class="profile-info">
+                    <h1>Valentina Villamarín Gaona</h1>
+                    <div class="unique-value-prop">Psicóloga → Especialista en Automatización Inteligente</div>
+                </div>
+            </div>
+            
+            <div class="credentials">
+                <span class="credential">🧠 Psicóloga</span>
+                <span class="credential">🔒 Cisco Cybersecurity</span>
+                <span class="credential">⚙️ n8n Automation</span>
+            </div>
+
+            <div class="bio-highlight">
+                <strong>Combino el entendimiento del comportamiento humano con tecnología avanzada</strong> para crear automatizaciones que realmente funcionan en el mundo real. Mi formación en psicología me permite diseñar procesos que las personas adoptarán naturalmente, mientras mi experiencia en ciberseguridad garantiza que sean seguros y confiables.
+            </div>
+
+            <div class="social-links">
+                <a href="https://github.com/valentinavillamarin" target="_blank">📚 GitHub</a>
+                <a href="https://linkedin.com/in/valentina-villamarin-gaona" target="_blank">💼 LinkedIn</a>
+                <a href="mailto:valentina.villamarin@gmail.com">✉️ Contacto</a>
+                <a href="./cv.pdf" target="_blank">📄 Descargar CV</a>
+            </div>
+        </header>
+
+        <h2 class="section-title">🚀 Proyectos que Transforman Procesos</h2>
+
+        <div class="projects-grid">
+            <!-- Proyecto 1: Monitor de Precios -->
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">🔍 Monitor de Precios Inteligente</h3>
+                    <div class="status-badge completed">Completado</div>
+                </div>
+                
+                <p class="project-description">
+                    Sistema de monitoreo automatizado que rastrea precios de productos en múltiples plataformas y envía alertas personalizadas. Incluye análisis de tendencias y predicciones de comportamiento de precios.
+                </p>
+
+                <div class="psychology-insight">
+                    💡 <strong>Insight Psicológico:</strong> Diseñé las notificaciones basándome en la teoría de la aversión a la pérdida: el sistema alerta cuando hay descuentos significativos, aprovechando el sesgo cognitivo FOMO (Fear of Missing Out).
+                </div>
+
+                <div class="impact-metrics">
+                    <div class="metric">
+                        <div class="metric-number">85%</div>
+                        <div class="metric-label">Ahorro promedio</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-number">24/7</div>
+                        <div class="metric-label">Monitoreo</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-number">5min</div>
+                        <div class="metric-label">Setup tiempo</div>
+                    </div>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-tag">n8n Workflows</span>
+                    <span class="tech-tag">Web Scraping</span>
+                    <span class="tech-tag">Email Automation</span>
+                    <span class="tech-tag">JSON Processing</span>
+                    <span class="tech-tag">Conditional Logic</span>
+                </div>
+
+                <div class="project-links">
+                    <a href="#" class="demo-btn">🎯 Ver Demo en Vivo</a>
+                    <a href="https://github.com/valentinavillamarin/monitor-precios">📚 Ver Código</a>
+                    <a href="#" class="demo-btn">📖 Documentación</a>
+                </div>
+            </div>
+
+            <!-- Proyecto 2: Dashboard en Desarrollo -->
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">📊 Dashboard de Métricas Empresariales</h3>
+                    <div class="status-badge in-progress">En Desarrollo</div>
+                </div>
+                
+                <p class="project-description">
+                    Panel de control que conecta múltiples APIs para mostrar KPIs empresariales en tiempo real. Diseñado con principios de UX psychology para facilitar la toma de decisiones rápidas y efectivas.
+                </p>
+
+                <div class="psychology-insight">
+                    💡 <strong>Aplicando Psicología Cognitiva:</strong> Uso principios de carga cognitiva y teoría del color para presentar información compleja de manera que el cerebro la procese eficientemente.
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-tag">n8n Integrations</span>
+                    <span class="tech-tag">Multiple APIs</span>
+                    <span class="tech-tag">Real-time Data</span>
+                    <span class="tech-tag">Webhooks</span>
+                    <span class="tech-tag">Data Visualization</span>
+                </div>
+
+                <div class="project-links">
+                    <a href="#">🚧 Próximamente</a>
+                </div>
+            </div>
+
+            <!-- Proyecto 3: Automatización RRSS -->
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">📱 Automatización de Redes Sociales IA</h3>
+                    <div class="status-badge planned">Planeado</div>
+                </div>
+                
+                <p class="project-description">
+                    Sistema inteligente que programa contenido adaptado psicológicamente para cada plataforma social, analizando el mejor momento de publicación basado en el comportamiento de la audiencia.
+                </p>
+
+                <div class="psychology-insight">
+                    💡 <strong>Behavioral Analytics:</strong> Integraré modelos de psicología social para optimizar el timing y el tipo de contenido según los patrones de engagement de cada red social.
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-tag">Social Media APIs</span>
+                    <span class="tech-tag">AI Content Adaptation</span>
+                    <span class="tech-tag">Behavioral Analysis</span>
+                    <span class="tech-tag">Scheduling Logic</span>
+                    <span class="tech-tag">Analytics Integration</span>
+                </div>
+
+                <div class="project-links">
+                    <a href="#">🔮 En Planificación</a>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="cta-section">
+                <h3 class="cta-title">¿Tienes procesos que consumen tu tiempo?</h3>
+                <p class="cta-description">
+                    Combinemos mi experiencia en psicología del comportamiento con automatización inteligente. Creemos soluciones que no solo funcionen, sino que la gente realmente quiera usar.
+                </p>
+                <a href="mailto:valentina.villamarin@gmail.com" class="contact-button">
+                    💬 Conversemos sobre tu proyecto
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Añadir efectos de interactividad
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-15px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Efecto de typing para el título
+        const title = document.querySelector('h1');
+        const originalText = title.textContent;
+        title.textContent = '';
+        let i = 0;
+        
+        function typeWriter() {
+            if (i < originalText.length) {
+                title.textContent += originalText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+        
+        setTimeout(typeWriter, 1000);
+    </script>
+</body>
+</html>
